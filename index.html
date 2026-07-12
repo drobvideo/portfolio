@@ -780,14 +780,14 @@
 
 <script>
   const videos = [
-    { id: "wggSRwVaxEo", title: "Имидж студия «Подиум»", duration: "0:20" },
-    { id: "IqkTcyahR-s", title: "ООО «Стройконструкция», г. Сургут", duration: "1:25" },
-    { id: "7KNVivoYzFQ", title: "КЦ Зеленоград", duration: "1:12" },
-    { id: "YtHPkakfcMI", title: "ООО Мясокомбинат «Сургутский»", duration: "0:11" },
-    { id: "XWkZi-XpLzw", title: "Улочная булочная — сеть пекарен", duration: "0:21" },
-    { id: "CPBJvDUuwYk", title: "АЛМИ промо", duration: "2:01" },
-    { id: "gzDpc397S_8", title: "«4 комнаты» — хостел Кетрин, г. Сургут", duration: "1:05" },
-    { id: "JmOioio8Vlc", title: "Салон красоты «Всё кучеряво»", duration: "1:12" }
+    { id: "wggSRwVaxEo", title: "Имидж студия «Подиум»", duration: "0:20", cover: "covers/podium.jpg" },
+    { id: "IqkTcyahR-s", title: "ООО «Стройконструкция», г. Сургут", duration: "1:25", cover: "covers/stroyk.jpg" },
+    { id: "7KNVivoYzFQ", title: "КЦ Зеленоград", duration: "1:12", cover: "covers/zelenograd.jpg" },
+    { id: "YtHPkakfcMI", title: "ООО Мясокомбинат «Сургутский»", duration: "0:11", cover: "covers/surgutsky.jpg" },
+    { id: "XWkZi-XpLzw", title: "Улочная булочная — сеть пекарен", duration: "0:21", cover: "covers/bulochnaya.jpg" },
+    { id: "CPBJvDUuwYk", title: "АЛМИ промо", duration: "2:01", cover: "covers/almi.jpg" },
+    { id: "gzDpc397S_8", title: "«4 комнаты» — хостел Кетрин, г. Сургут", duration: "1:05", cover: "covers/4rooms.jpg" },
+    { id: "JmOioio8Vlc", title: "Салон красоты «Всё кучеряво»", duration: "1:12", cover: "covers/kucheryavo.jpg" }
   ];
 
   const grid = document.getElementById('video-grid');
@@ -797,7 +797,7 @@
     card.className = 'card';
     card.innerHTML = `
       <div class="card-media">
-        <img src="https://img.youtube.com/vi/${v.id}/hqdefault.jpg" alt="${v.title}" loading="lazy">
+        <img src="${v.cover}" onerror="this.src='https://img.youtube.com/vi/${v.id}/hqdefault.jpg'" alt="${v.title}" loading="lazy">
         <button class="play-btn" aria-label="Воспроизвести: ${v.title}">
           <svg viewBox="0 0 24 24" fill="none">
             <circle cx="12" cy="12" r="11" fill="rgba(23,24,26,0.55)" stroke="#f7f6f3" stroke-width="1.2"/>
