@@ -82,11 +82,31 @@
     color:var(--dim); font-family:'JetBrains Mono', monospace;
   }
   .hero-sub{
-    margin-top:36px;
+    margin-top:28px;
     max-width:560px;
     font-size:17px; line-height:1.7;
     color:#c7c6c2;
     font-weight:400;
+  }
+  .hero-stats{
+    margin-top:34px;
+    display:flex; align-items:center; gap:28px;
+  }
+  .hstat{ display:flex; flex-direction:column; align-items:center; gap:4px; }
+  .hstat .num{
+    font-family:'JetBrains Mono', monospace;
+    font-size:clamp(26px, 4vw, 36px);
+    font-weight:500;
+    color:var(--cream);
+  }
+  .hstat .lbl{
+    font-size:12px; color:var(--dim);
+    letter-spacing:0.04em;
+  }
+  .hstat-div{
+    width:1px; height:44px;
+    background:var(--line);
+    transform:rotate(14deg);
   }
   .hero-scroll{
     position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
@@ -558,7 +578,12 @@
     <rect x="-32.064" y="-194.464" width="1066.128" height="239.928" fill="#f7f6f3" mask="url(#herocut)"/>
   </svg>
   <div class="hero-tagline">Видеомонтаж · Пост-продакшн</div>
-  <p class="hero-sub">800 роликов за 4 года — реклама, reels, репортажи. Монтирую так, чтобы досматривали до конца.</p>
+  <div class="hero-stats">
+    <div class="hstat"><span class="num">4+</span><span class="lbl">года опыта</span></div>
+    <div class="hstat-div"></div>
+    <div class="hstat"><span class="num">800+</span><span class="lbl">смонтированных роликов</span></div>
+  </div>
+  <p class="hero-sub">Реклама, reels, репортажи, экспедиции. Монтирую так, чтобы досматривали до конца.</p>
   <div class="hero-scroll">
     <span>SCROLL</span>
     <span class="line"></span>
@@ -568,9 +593,14 @@
 <section class="clients">
   <div class="clients-label">С кем работал</div>
   <div class="clients-row">
+    <span>ПАО «Газпром»</span>
+    <span>Capital Group</span>
+    <span>«Салым Петролеум Девелопмент»</span>
+    <span>ОЦ «Сириус»</span>
     <span>Pepsi Беларусь</span>
     <span>Bambino</span>
     <span>БЬЮТИГОЛИК</span>
+    <span>Автохаус</span>
     <span>АЛМИ</span>
     <span>КЦ Зеленоград</span>
     <span>Мясокомбинат «Сургутский»</span>
