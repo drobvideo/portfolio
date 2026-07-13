@@ -181,17 +181,17 @@
 
   /* ===== SECTIONS ===== */
   section{ position:relative; z-index:2; }
-  .sec{ padding:clamp(90px, 13vw, 190px) var(--pad) 0; }
+  .sec{ padding:clamp(110px, 15vw, 230px) var(--pad) 0; }
   .sec-head{
     display:flex; align-items:baseline; justify-content:space-between;
     gap:24px; flex-wrap:wrap;
-    margin-bottom:clamp(40px, 5vw, 68px);
+    margin-bottom:clamp(48px, 6vw, 84px);
   }
   .sec-title{
-    font-size:clamp(30px, 4.6vw, 60px);
+    font-size:clamp(32px, 5.2vw, 72px);
     font-weight:300;
-    letter-spacing:-0.02em;
-    line-height:1;
+    letter-spacing:-0.025em;
+    line-height:0.98;
   }
   .sec-idx{
     font-family:'JetBrains Mono', monospace;
@@ -217,6 +217,35 @@
   .grid.featured{ grid-template-columns:repeat(3, 1fr); }
   @media (max-width:1100px){ .grid, .grid.featured{ grid-template-columns:repeat(2, 1fr); } }
   @media (max-width:620px){ .grid, .grid.featured{ grid-template-columns:1fr; } }
+
+  /* asymmetric hero row: one large piece + two stacked */
+  .work-row{
+    display:grid;
+    grid-template-columns: 1.7fr 1fr;
+    gap:clamp(16px, 2vw, 28px);
+  }
+  .work-side{
+    display:flex; flex-direction:column;
+    gap:clamp(16px, 2vw, 28px);
+  }
+  .work-side .card-media{ aspect-ratio:16/10; }
+  @media (max-width:900px){
+    .work-row{ grid-template-columns:1fr; }
+  }
+
+  /* commercial: lead item wider than the rest */
+  .grid.lead-grid{ grid-template-columns:repeat(3, 1fr); }
+  .grid.lead-grid .card:first-child{ grid-column: span 2; }
+  .grid.lead-grid .card:first-child .card-media{ aspect-ratio:21/9; }
+  @media (max-width:1100px){
+    .grid.lead-grid{ grid-template-columns:repeat(2, 1fr); }
+    .grid.lead-grid .card:first-child{ grid-column: span 2; }
+  }
+  @media (max-width:620px){
+    .grid.lead-grid{ grid-template-columns:1fr; }
+    .grid.lead-grid .card:first-child{ grid-column: span 1; }
+    .grid.lead-grid .card:first-child .card-media{ aspect-ratio:16/9; }
+  }
 
   .card{ display:block; cursor:pointer; }
   .card-media{
@@ -262,7 +291,7 @@
   .grid.vert .card-media{ aspect-ratio:9/16; }
 
   /* ===== CASE (editorial) ===== */
-  .case{ padding:clamp(90px, 13vw, 190px) var(--pad) 0; }
+  .case{ padding:clamp(130px, 16vw, 250px) var(--pad) 0; }
   .case-visual{
     width:100%;
     aspect-ratio:21/9;
@@ -379,7 +408,7 @@
 
   /* ===== FOOTER ===== */
   .footer{
-    margin-top:clamp(100px, 14vw, 200px);
+    margin-top:clamp(140px, 16vw, 240px);
     padding:clamp(60px, 8vw, 110px) var(--pad) 46px;
     border-top:1px solid var(--line);
   }
@@ -499,7 +528,10 @@
     <h2 class="sec-title">Selected Work</h2>
     <span class="sec-idx mono">(01)</span>
   </div>
-  <div class="grid featured rv" id="grid-selected"></div>
+  <div class="work-row rv">
+    <div id="work-main"></div>
+    <div class="work-side" id="work-side"></div>
+  </div>
 </section>
 
 <!-- COMMERCIAL -->
@@ -508,7 +540,7 @@
     <h2 class="sec-title">Commercial</h2>
     <span class="sec-idx mono">(02)</span>
   </div>
-  <div class="grid rv" id="grid-commercial"></div>
+  <div class="grid lead-grid rv" id="grid-commercial"></div>
 </section>
 
 <!-- REELS -->
@@ -528,7 +560,7 @@
   </div>
 
   <div class="case-visual rv" id="case-visual-1">
-    <img src="https://img.youtube.com/vi/gZfuFPQZGM4/maxresdefault.jpg" alt="">
+    <img src="covers/bambino-case.jpg" alt="Bambino">
     <div class="card-play">
       <svg viewBox="0 0 44 44" fill="none">
         <circle cx="22" cy="22" r="21" stroke="#F6F6F4" stroke-width="1" fill="rgba(16,16,16,0.3)"/>
@@ -577,7 +609,7 @@
     <div class="case-txt">
       <p>Цветокоррекция, обработка звука и монтаж для бьюти-эксперта с большой лояльной аудиторией. Каждый ролик — отдельная история с плотным ритмом и чистым звуком.</p>
       <div class="case-nums">
-        <div><div class="n">2.5M</div><div class="l">суммарных<br>просмотров</div></div>
+        <div><div class="n">1.8M</div><div class="l">суммарных<br>просмотров</div></div>
         <div><div class="n">792K</div><div class="l">у лучшего<br>ролика</div></div>
         <div><div class="n">206K</div><div class="l">аудитория<br>блогера</div></div>
       </div>
@@ -693,8 +725,11 @@
     return a;
   }
 
-  const gSel = document.getElementById('grid-selected');
-  commercial.slice(0, 3).forEach(v => gSel.appendChild(ytCard(v)));
+  const wMain = document.getElementById('work-main');
+  const wSide = document.getElementById('work-side');
+  const selected = commercial.slice(0, 3);
+  wMain.appendChild(ytCard(selected[0]));
+  selected.slice(1).forEach(v => wSide.appendChild(ytCard(v)));
 
   const gCom = document.getElementById('grid-commercial');
   commercial.forEach(v => gCom.appendChild(ytCard(v)));
