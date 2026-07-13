@@ -665,7 +665,12 @@
 
 <script>
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-  window.addEventListener('load', () => { if (!location.hash) window.scrollTo(0, 0); });
+  // always start at the very top, regardless of any #hash left in the URL from a previous click
+  window.scrollTo(0, 0);
+  window.addEventListener('load', () => {
+    window.scrollTo(0, 0);
+    if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  });
 
   const PLAY = `<div class="card-play"><svg viewBox="0 0 44 44" fill="none"><circle cx="22" cy="22" r="21" stroke="#F6F6F4" stroke-width="1" fill="rgba(16,16,16,0.3)"/><path d="M18 15L30 22L18 29V15Z" fill="#F6F6F4"/></svg></div>`;
 
