@@ -713,17 +713,15 @@
   ];
 
   const social = [
-    { id:"9RAXr3QOQY0", t:"БЬЮТИГОЛИК — Блогеры лицемеры" },
-    { id:"IYGSHRnUc7E", t:"БЬЮТИГОЛИК — Время признаться" },
-    { id:"jqvH7joz0I8", t:"Валентин Бернацкий — твой эксперт по красоте" },
-    { id:"S9yVAB1rOCE", t:"Как надо проявляться?" },
-    { id:"ral4FEosmJ8", t:"Мне сегодня 27" },
-    { id:"LEGaJHCwYM0", t:"Предложение руки и сердца" },
-    { id:"2fgqo8pD5rU", t:"Салон красоты «Всё кучеряво»" },
-    { id:"2Lz39M5wvds", t:"Liberty Kids — молочные зубы" },
-    { id:"UgZA-iZLyIU", t:"Liberty Kids — зуб длиннее нормы" },
-    { id:"ccY8QyNfrYA", t:"Los Angeles — Happy Birthday" },
-    { id:"LziDSUq36CI", t:"Miele & Cie KG" }
+    { id:"9RAXr3QOQY0", t:"БЬЮТИГОЛИК — Блогеры лицемеры",                 cover:"covers/social/blogery-licemeryat.jpg" },
+    { id:"IYGSHRnUc7E", t:"БЬЮТИГОЛИК — Время признаться",                 cover:"covers/social/vremya-priznatsya.jpg" },
+    { id:"jqvH7joz0I8", t:"Валентин Бернацкий — твой эксперт по красоте",  cover:"covers/social/ekspert-po-krasote.jpg" },
+    { id:"S9yVAB1rOCE", t:"Как надо проявляться?",                         cover:"covers/social/kak-nado-proyavlyatsya.jpg" },
+    { id:"ral4FEosmJ8", t:"Мне сегодня 27",                                cover:"covers/social/mne-27.jpg" },
+    { id:"2fgqo8pD5rU", t:"Салон красоты «Всё кучеряво»",                  cover:"covers/social/salon-kucheryavo.jpg" },
+    { id:"UgZA-iZLyIU", t:"Liberty Kids — зуб длиннее нормы",              cover:"covers/social/zub-dlinnee.jpg" },
+    { id:"ccY8QyNfrYA", t:"Los Angeles — Happy Birthday",                  cover:"covers/social/la-happy-birthday.jpg" },
+    { id:"LziDSUq36CI", t:"Miele & Cie KG",                                cover:"covers/social/miele.jpg" }
   ];
 
   const reels = [
@@ -739,11 +737,13 @@
     const el = document.createElement('div');
     el.className = 'card';
     const meta = v.c && v.d ? `${v.c} · ${v.d}` : (v.c || v.d || 'Social Content');
+    // custom cover if provided, otherwise fall back to YouTube's own thumbnail
+    const imgTag = v.cover
+      ? `<img src="${v.cover}" onerror="this.onerror=null;this.src='https://img.youtube.com/vi/${v.id}/hqdefault.jpg'" alt="${v.t}" loading="lazy">`
+      : `<img src="https://img.youtube.com/vi/${v.id}/maxresdefault.jpg" onerror="this.src='https://img.youtube.com/vi/${v.id}/hqdefault.jpg'" alt="${v.t}" loading="lazy">`;
     el.innerHTML = `
       <div class="card-media">
-        <img src="https://img.youtube.com/vi/${v.id}/maxresdefault.jpg"
-             onerror="this.src='https://img.youtube.com/vi/${v.id}/hqdefault.jpg'"
-             alt="${v.t}" loading="lazy">
+        ${imgTag}
         ${PLAY}
       </div>
       <div class="card-meta">
