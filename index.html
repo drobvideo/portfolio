@@ -49,29 +49,56 @@
     position:fixed; top:0; left:0; right:0;
     z-index:80;
     display:flex; align-items:center; justify-content:space-between;
-    padding:26px var(--pad);
-    transition:background 0.6s ease, backdrop-filter 0.6s ease, transform 0.5s ease;
+    padding:22px var(--pad);
+    min-height:56px;
+    transition:background 0.5s ease, padding 0.4s ease, border-color 0.5s ease;
+    background:transparent;
+    border-bottom:1px solid transparent;
   }
   .nav.solid{
-    background:rgba(16,16,16,0.72);
-    backdrop-filter:blur(16px);
+    padding-top:14px; padding-bottom:14px;
+    background:rgba(16,16,16,0.82);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
     border-bottom:1px solid var(--line);
   }
-  .nav.hide{ transform:translateY(-100%); }
-  .nav-logo{ font-weight:600; font-size:16px; letter-spacing:0.01em; }
-  .nav-right{ display:flex; align-items:center; gap:36px; }
-  .nav-links{ display:flex; gap:30px; }
+  .nav-logo{ font-weight:600; font-size:16px; letter-spacing:0.01em; flex-shrink:0; }
+  .nav-right{ display:flex; align-items:center; gap:28px; min-width:0; }
+  .nav-links{
+    display:flex; gap:26px;
+    overflow-x:auto;
+    scrollbar-width:none;
+    -ms-overflow-style:none;
+    white-space:nowrap;
+  }
+  .nav-links::-webkit-scrollbar{ display:none; }
   .nav-links a{
     font-family:'JetBrains Mono', monospace;
     font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
     color:var(--dim);
     transition:color 0.4s;
+    flex-shrink:0;
+    scroll-margin-left:20px;
   }
   .nav-links a:hover{ color:var(--text); }
-  @media (max-width:700px){ .nav-links{ display:none; } }
-  .nav-icons{ display:flex; align-items:center; gap:18px; }
+  .nav-contact{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px; letter-spacing:0.14em; text-transform:uppercase;
+    color:var(--dim);
+    flex-shrink:0;
+    transition:color 0.4s;
+  }
+  .nav-contact:hover{ color:var(--text); }
+  .nav-icons{ display:flex; align-items:center; gap:18px; flex-shrink:0; }
   .nav-icons svg{ width:17px; height:17px; fill:var(--text); opacity:0.7; transition:opacity 0.4s; }
   .nav-icons a:hover svg{ opacity:1; }
+  @media (max-width:700px){
+    .nav-right{ gap:18px; }
+    .nav-links{ gap:18px; }
+  }
+
+  /* offset anchored scroll targets so the sticky nav never covers the section title */
+  section[id], header.hero{ scroll-margin-top:72px; }
 
   /* ===== HERO ===== */
   .hero{
@@ -457,7 +484,7 @@
   #toTop:hover{ background:var(--text); color:var(--bg); }
 
   /* reveal on scroll */
-  .rv{ opacity:0; transform:translateY(26px); transition:opacity 1.2s cubic-bezier(0.22,1,0.36,1), transform 1.2s cubic-bezier(0.22,1,0.36,1); }
+  .rv{ opacity:0; transform:translateY(24px); transition:opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1); }
   .rv.in{ opacity:1; transform:none; }
 </style>
 </head>
@@ -467,12 +494,13 @@
   <a href="#" class="nav-logo">drobvideo</a>
   <div class="nav-right">
     <div class="nav-links">
-      <a href="#work">Films</a>
+      <a href="#work">Selected Films</a>
       <a href="#commercial">Commercial</a>
-      <a href="#reels">Social</a>
+      <a href="#reels">Content</a>
       <a href="#cases">Documentary</a>
-      <a href="#about">About</a>
+      <a href="#work">Long Form</a>
     </div>
+    <a href="#footer-contact" class="nav-contact">Contact</a>
     <div class="nav-icons">
       <a href="https://t.me/temadrob" target="_blank" rel="noopener" aria-label="Telegram">
         <svg viewBox="0 0 24 24"><path d="M21.9 4.3c.3-1.2-.9-2.2-2-1.7L2.7 9.9c-1.2.5-1.1 2.2.1 2.6l4.4 1.4 1.7 5.3c.3 1.1 1.7 1.4 2.5.6l2.5-2.4 4.5 3.3c1 .7 2.4.2 2.7-1l3-15.4h-.2zM9.4 13.1l8.2-5.2c.4-.2.7.3.4.6l-6.7 6.2-.3 3.4-1.6-5z"/></svg>
@@ -510,7 +538,7 @@
     <div class="hero-line">для брендов, которым есть что рассказать</div>
 
     <div class="hero-stats">
-      <div class="hstat"><div class="num">04+</div><div class="lbl">Years</div></div>
+      <div class="hstat"><div class="num">4+</div><div class="lbl">Years</div></div>
       <div class="hstat"><div class="num">800+</div><div class="lbl">Projects</div></div>
     </div>
 
@@ -634,7 +662,7 @@
       <p>Многокамерный монтаж и большие объёмы материала — без стресса. Музыка и футажи — лицензированные.</p>
       <div class="about-nums">
         <div><div class="n">600+</div><div class="l">вертикальных</div></div>
-        <div><div class="n">04+</div><div class="l">года опыта</div></div>
+        <div><div class="n">4+</div><div class="l">года опыта</div></div>
       </div>
       <div class="about-stack">DaVinci Resolve • After Effects • Final Cut • Motion • AI</div>
     </div>
@@ -643,7 +671,7 @@
 
 </main>
 
-<footer class="footer">
+<footer class="footer" id="footer-contact">
   <div class="footer-top">
     <div class="footer-cta">
       Post Production —<br>
@@ -684,6 +712,20 @@
     { id:"gzDpc397S_8", t:"Хостел «Кетрин» — «4 комнаты»",     c:"Commercial", d:"1:05" }
   ];
 
+  const social = [
+    { id:"9RAXr3QOQY0", t:"БЬЮТИГОЛИК — Блогеры лицемеры" },
+    { id:"IYGSHRnUc7E", t:"БЬЮТИГОЛИК — Время признаться" },
+    { id:"jqvH7joz0I8", t:"Валентин Бернацкий — твой эксперт по красоте" },
+    { id:"S9yVAB1rOCE", t:"Как надо проявляться?" },
+    { id:"ral4FEosmJ8", t:"Мне сегодня 27" },
+    { id:"LEGaJHCwYM0", t:"Предложение руки и сердца" },
+    { id:"2fgqo8pD5rU", t:"Салон красоты «Всё кучеряво»" },
+    { id:"2Lz39M5wvds", t:"Liberty Kids — молочные зубы" },
+    { id:"UgZA-iZLyIU", t:"Liberty Kids — зуб длиннее нормы" },
+    { id:"ccY8QyNfrYA", t:"Los Angeles — Happy Birthday" },
+    { id:"LziDSUq36CI", t:"Miele & Cie KG" }
+  ];
+
   const reels = [
     { img:"covers/ig/penka.jpg",      t:"Лучшая пенка для умывания",  v:"792K", url:"https://www.instagram.com/p/C4vSiXwNGO1/" },
     { img:"covers/ig/beautynews.jpg", t:"Beauty News",                v:"377K", url:"https://www.instagram.com/p/DDCbvhctLUS/" },
@@ -696,6 +738,7 @@
   function ytCard(v) {
     const el = document.createElement('div');
     el.className = 'card';
+    const meta = v.c && v.d ? `${v.c} · ${v.d}` : (v.c || v.d || 'Social Content');
     el.innerHTML = `
       <div class="card-media">
         <img src="https://img.youtube.com/vi/${v.id}/maxresdefault.jpg"
@@ -705,7 +748,7 @@
       </div>
       <div class="card-meta">
         <div class="t">${v.t}</div>
-        <div class="s mono">${v.c} · ${v.d}</div>
+        <div class="s mono">${meta}</div>
       </div>`;
     el.querySelector('.card-media').addEventListener('click', () => {
       el.querySelector('.card-media').innerHTML =
@@ -740,7 +783,7 @@
   commercial.forEach(v => gCom.appendChild(ytCard(v)));
 
   const gReels = document.getElementById('grid-reels');
-  reels.forEach(r => gReels.appendChild(igCard(r)));
+  social.forEach(v => gReels.appendChild(ytCard(v)));
 
   const gSeries = document.getElementById('grid-series');
   reels.forEach(r => gSeries.appendChild(igCard(r)));
@@ -757,16 +800,70 @@
   }, { threshold: 0.12 });
   document.querySelectorAll('.rv').forEach(el => io.observe(el));
 
-  // nav behaviour
+  // nav behaviour: compact sticky bar once hero has scrolled past, always visible
   const nav = document.getElementById('nav');
-  let lastY = 0;
-  window.addEventListener('scroll', () => {
+  const heroEl = document.querySelector('.hero');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isDesktop = () => window.innerWidth > 760;
+
+  function onScrollNav() {
     const y = window.scrollY;
-    nav.classList.toggle('solid', y > 80);
-    nav.classList.toggle('hide', y > lastY && y > 200);
-    lastY = y;
+    const heroH = heroEl ? heroEl.offsetHeight : 600;
+    nav.classList.toggle('solid', y > heroH - 100);
     toTop.classList.toggle('show', y > 1200);
-  }, { passive:true });
+  }
+  window.addEventListener('scroll', onScrollNav, { passive:true });
+  onScrollNav();
+
+  // subtle parallax — hero background layer + Selected Films hero card, desktop only, respects reduced motion
+  if (!reduceMotion) {
+    const heroReel = document.querySelector('.hero-reel');
+    const workSection = document.getElementById('work');
+    const workMainEl = document.getElementById('work-main');
+
+    function onScrollParallax() {
+      if (!isDesktop()) return;
+      const y = window.scrollY;
+
+      // hero: background drifts at ~7% of scroll while section is in view
+      if (heroReel && heroEl) {
+        const heroH = heroEl.offsetHeight;
+        if (y < heroH) {
+          heroReel.style.transform = `translateY(${(y * 0.07).toFixed(1)}px)`;
+        }
+      }
+
+      // Selected Films: hero card moves slightly slower than the section scroll (max ~40px differential)
+      if (workSection && workMainEl) {
+        const rect = workSection.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (rect.top < vh && rect.bottom > 0) {
+          const progress = Math.min(1, Math.max(0, (vh - rect.top) / (vh + rect.height)));
+          const shift = (progress - 0.5) * 40; // -20px .. +20px
+          workMainEl.style.transform = `translateY(${shift.toFixed(1)}px)`;
+        }
+      }
+    }
+    window.addEventListener('scroll', onScrollParallax, { passive:true });
+    onScrollParallax();
+  }
+
+  // Content (Social): very light horizontal drift tied to scroll progress through the section, desktop only
+  if (!reduceMotion) {
+    const contentSection = document.getElementById('reels');
+    const contentGrid = document.getElementById('grid-reels');
+    function onScrollContentDrift() {
+      if (!isDesktop() || !contentSection || !contentGrid) return;
+      const rect = contentSection.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const total = rect.height + vh;
+      const progress = Math.min(1, Math.max(0, (vh - rect.top) / total));
+      const drift = (progress - 0.5) * 80; // -40px .. +40px, ~80px total travel
+      contentGrid.style.transform = `translateX(${drift.toFixed(1)}px)`;
+    }
+    window.addEventListener('scroll', onScrollContentDrift, { passive:true });
+    onScrollContentDrift();
+  }
 
   const toTop = document.getElementById('toTop');
   toTop.addEventListener('click', () => window.scrollTo({ top:0, behavior:'smooth' }));
@@ -776,15 +873,17 @@
     .map(id => document.getElementById(id)).filter(Boolean);
   const navLinkMap = {};
   document.querySelectorAll('.nav-links a').forEach(a => {
-    navLinkMap[a.getAttribute('href').slice(1)] = a;
+    const key = a.getAttribute('href').slice(1);
+    (navLinkMap[key] = navLinkMap[key] || []).push(a);
   });
+  const allNavLinks = document.querySelectorAll('.nav-links a');
   const spyIO = new IntersectionObserver((entries) => {
     entries.forEach(e => {
-      const link = navLinkMap[e.target.id];
-      if (!link) return;
+      const links = navLinkMap[e.target.id];
+      if (!links) return;
       if (e.isIntersecting) {
-        Object.values(navLinkMap).forEach(a => a.classList.remove('active'));
-        link.classList.add('active');
+        allNavLinks.forEach(a => a.classList.remove('active'));
+        links.forEach(a => a.classList.add('active'));
       }
     });
   }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
