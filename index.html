@@ -951,7 +951,7 @@
     const heroReel = document.querySelector('.hero-reel');
 
     function onScrollParallax() {
-      if (!isDesktop()) return;
+      if (!isDesktop()) { if (heroReel) heroReel.style.transform = ''; return; }
       const y = window.scrollY;
 
       // hero: background drifts at ~7% of scroll while section is in view
@@ -964,6 +964,7 @@
 
     }
     window.addEventListener('scroll', onScrollParallax, { passive:true });
+    window.addEventListener('resize', onScrollParallax, { passive:true });
     onScrollParallax();
   }
 
@@ -972,7 +973,10 @@
     const contentSection = document.getElementById('reels');
     const contentGrid = document.getElementById('grid-reels');
     function onScrollContentDrift() {
-      if (!isDesktop() || !contentSection || !contentGrid) return;
+      if (!contentSection || !contentGrid) return;
+      // на мобильной ширине дрейф не нужен — обязательно сбрасываем сдвиг,
+      // иначе карточки уезжают за край экрана
+      if (!isDesktop()) { contentGrid.style.transform = ''; return; }
       const rect = contentSection.getBoundingClientRect();
       const vh = window.innerHeight;
       const total = rect.height + vh;
@@ -981,6 +985,7 @@
       contentGrid.style.transform = `translateX(${drift.toFixed(1)}px)`;
     }
     window.addEventListener('scroll', onScrollContentDrift, { passive:true });
+    window.addEventListener('resize', onScrollContentDrift, { passive:true });
     onScrollContentDrift();
   }
 
