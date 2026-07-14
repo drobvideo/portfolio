@@ -938,8 +938,9 @@
 
   function onScrollNav() {
     const y = window.scrollY;
-    const heroH = heroEl ? heroEl.offsetHeight : 600;
-    nav.classList.toggle('solid', y > heroH - 100);
+    // подложка появляется при малейшем скролле — меню никогда не накладывается
+    // на hero-лого «голым текстом»; наверху шапка прозрачная
+    nav.classList.toggle('solid', y > 24);
     const nearBottom = (window.innerHeight + y) > (document.documentElement.scrollHeight - 200);
     toTop.classList.toggle('show', nearBottom);
   }
