@@ -445,13 +445,15 @@
     padding-top:clamp(32px, 4vw, 48px);
     border-top:1px solid var(--line);
     display:grid;
-    grid-template-columns:1fr minmax(0, 48%);
+    grid-template-columns:1fr minmax(0, 38%);
     gap:clamp(32px, 6vw, 90px);
     align-items:center;
   }
   @media (max-width:900px){
     .case-results{ grid-template-columns:1fr; gap:40px; align-items:start; }
   }
+  .case-results-right{ max-width:480px; justify-self:end; }
+  @media (max-width:900px){ .case-results-right{ max-width:560px; justify-self:start; } }
   .case-results-h{
     font-size:clamp(20px, 2.2vw, 26px);
     font-weight:300;
@@ -475,11 +477,13 @@
   .case-results-nums .pending .n{ color:var(--dim); font-weight:400; }
   .proof-open{
     display:block; width:100%;
-    padding:0; border:1px solid var(--line-strong);
+    padding:0; border:1px solid var(--line);
     border-radius:var(--r); overflow:hidden;
     background:var(--card);
     cursor:zoom-in;
+    transition:border-color 0.3s ease;
   }
+  .proof-open:hover{ border-color:var(--line-strong); }
   .proof-open img{ width:100%; display:block; }
   .proof-caption{
     margin-top:12px;
