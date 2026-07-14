@@ -439,82 +439,6 @@
   .quote a{ color:var(--dim); border-bottom:1px solid var(--line); }
   .quote a:hover{ color:var(--text); }
 
-  /* ===== CASE RESULTS (подтверждённые результаты + скрин аналитики) ===== */
-  .case-results{
-    margin-top:clamp(48px, 6vw, 80px);
-    padding-top:clamp(32px, 4vw, 48px);
-    border-top:1px solid var(--line);
-    display:grid;
-    grid-template-columns:1fr minmax(0, 38%);
-    gap:clamp(32px, 6vw, 90px);
-    align-items:center;
-  }
-  @media (max-width:900px){
-    .case-results{ grid-template-columns:1fr; gap:40px; align-items:start; }
-  }
-  .case-results-right{ max-width:480px; justify-self:end; }
-  @media (max-width:900px){ .case-results-right{ max-width:560px; justify-self:start; } }
-  .case-results-h{
-    font-size:clamp(20px, 2.2vw, 26px);
-    font-weight:300;
-    letter-spacing:-0.01em;
-    margin-bottom:clamp(24px, 3vw, 36px);
-  }
-  .case-results-nums{ display:grid; gap:26px; }
-  .case-results-nums .n{
-    font-variant-numeric:tabular-nums;
-    font-size:clamp(26px, 2.8vw, 34px);
-    font-weight:500;
-    letter-spacing:-0.01em;
-  }
-  .case-results-nums .l{
-    margin-top:6px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:10px; letter-spacing:0.1em; text-transform:uppercase;
-    color:var(--dim); opacity:0.75;
-    line-height:1.5;
-  }
-  .case-results-nums .pending .n{ color:var(--dim); font-weight:400; }
-  .proof-open{
-    display:block; width:100%;
-    padding:0; border:1px solid var(--line);
-    border-radius:var(--r); overflow:hidden;
-    background:var(--card);
-    cursor:zoom-in;
-    transition:border-color 0.3s ease;
-  }
-  .proof-open:hover{ border-color:var(--line-strong); }
-  .proof-open img{ width:100%; display:block; }
-  .proof-caption{
-    margin-top:12px;
-    font-family:'JetBrains Mono', monospace;
-    font-size:10px; letter-spacing:0.08em;
-    color:var(--dim); opacity:0.6;
-  }
-  /* лайтбокс: мягкий fade, без сложных анимаций */
-  .lightbox{
-    position:fixed; inset:0; z-index:120;
-    display:flex; align-items:center; justify-content:center;
-    padding:clamp(20px, 4vw, 60px);
-    background:rgba(16,16,16,0.92);
-    opacity:0; transition:opacity 0.22s ease;
-  }
-  .lightbox.on{ opacity:1; }
-  .lightbox img{
-    max-width:min(1100px, 100%); max-height:86vh;
-    border-radius:var(--r);
-    border:1px solid var(--line-strong);
-  }
-  .lightbox-close{
-    position:absolute; top:22px; right:26px;
-    width:36px; height:36px; border-radius:50%;
-    border:1px solid var(--line-strong);
-    background:transparent; color:var(--text);
-    font-size:13px; cursor:pointer;
-    transition:background 0.3s ease, color 0.3s ease;
-  }
-  .lightbox-close:hover{ background:var(--text); color:var(--bg); }
-
   .content-proof{
     margin-top:clamp(48px, 6vw, 80px);
     padding-top:clamp(32px, 4vw, 48px);
@@ -753,37 +677,14 @@
     <div class="case-txt">
       <p>Хоррор-гейминг эстетика. Атмосфера старой видеоигры, drop frame, плотный звук, AI-озвучка.</p>
       <p>Вышел в TikTok и на YouTube Shorts одновременно. Аудитория выросла за несколько дней.</p>
-    </div>
-  </div>
-
-  <!-- Результаты проекта: только подтверждённые данные -->
-  <div class="case-results rv">
-    <div class="case-results-left">
-      <h3 class="case-results-h">Результаты проекта</h3>
-      <div class="case-results-nums">
-        <div><div class="n">1.1M</div><div class="l">просмотров на YouTube</div></div>
-        <div><div class="n">+5.3K</div><div class="l">новых подписчиков</div></div>
-        <div class="pending"><div class="n">TikTok</div><div class="l">данные будут добавлены позже</div></div>
+      <div class="case-nums">
+        <div><div class="n">1M</div><div class="l">просмотров<br>YouTube</div></div>
+        <div><div class="n">~600K</div><div class="l">просмотров<br>TikTok</div></div>
+        <div><div class="n">+6 200</div><div class="l">подписчиков<br>суммарно</div></div>
       </div>
-    </div>
-    <div class="case-results-right">
-      <button class="proof-open" id="proof-open" aria-label="Открыть скриншот YouTube Analytics крупнее">
-        <img src="covers/bambino-youtube-analytics.png"
-             alt="YouTube Analytics: 1,1 млн просмотров, +5,3 тыс. подписчиков"
-             loading="lazy" decoding="async"
-             onerror="this.closest('.case-results-right').style.display='none'">
-      </button>
-      <div class="proof-caption">Подтверждено данными YouTube Analytics</div>
     </div>
   </div>
 </section>
-
-<!-- лайтбокс для скрина аналитики -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Скриншот YouTube Analytics" hidden>
-  <button class="lightbox-close" id="lightbox-close" aria-label="Закрыть">&#10005;</button>
-  <img src="covers/bambino-youtube-analytics.png"
-       alt="YouTube Analytics: 1,1 млн просмотров, +5,3 тыс. подписчиков" loading="lazy" decoding="async">
-</div>
 
 <!-- CORPORATE -->
 <section class="sec" id="corporate">
@@ -1029,28 +930,6 @@
   cv.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playCase(); }
   });
-
-  // лайтбокс скрина аналитики: открытие по клику, закрытие по фону / Esc / кнопке
-  const proofBtn = document.getElementById('proof-open');
-  const lightbox = document.getElementById('lightbox');
-  const lightboxClose = document.getElementById('lightbox-close');
-  if (proofBtn && lightbox) {
-    const openLb = () => {
-      lightbox.hidden = false;
-      requestAnimationFrame(() => requestAnimationFrame(() => lightbox.classList.add('on')));
-      lightboxClose.focus();
-    };
-    const closeLb = () => {
-      lightbox.classList.remove('on');
-      setTimeout(() => { lightbox.hidden = true; proofBtn.focus(); }, 230);
-    };
-    proofBtn.addEventListener('click', openLb);
-    lightboxClose.addEventListener('click', closeLb);
-    lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLb(); });
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && !lightbox.hidden) closeLb();
-    });
-  }
 
   // reveal on scroll
   const io = new IntersectionObserver((entries) => {
