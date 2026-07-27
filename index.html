@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<!-- build: 20260727170459 -->
+
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>drobvideo — Post Production</title>
+<meta name="description" content="Артём Дробушевич — видеомонтаж и пост-продакшн. Реклама, корпоративные фильмы, контент для соцсетей, документалистика. 800+ проектов, 4+ года.">
+<meta property="og:title" content="drobvideo — Post Production">
+<meta property="og:description" content="Видеомонтаж и пост-продакшн для брендов. 800+ проектов, 4+ года.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://drobvideo.github.io/portfolio/">
+<meta property="og:image" content="https://drobvideo.github.io/portfolio/uploads/covers/ALMI.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f%5B%5D=clash-display@600&f%5B%5D=switzer@600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:#060606;}
+  ::selection{background:#f2f2f0;color:#0a0a0a;}
+  a{color:inherit;text-decoration:none;transition:opacity .3s;}
+  a:hover{opacity:.65;}
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:#060606;}
+  ::-webkit-scrollbar-thumb{background:#1b1b1e;border-radius:8px;}
+  ::-webkit-scrollbar-thumb:hover{background:#28282c;}
+  @keyframes marquee-scroll{ from{transform:translateX(0);} to{transform:translateX(-50%);} }
+
+  /* minimal back-to-top button */
+  #toTop{
+    position:fixed; right:26px; bottom:26px; z-index:50;
+    width:44px; height:44px; border-radius:50%;
+    background:rgba(17,17,17,.55);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    border:1px solid rgba(255,255,255,.14);
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer;
+    opacity:0; transform:translateY(8px); pointer-events:none;
+    transition:opacity .5s cubic-bezier(.16,1,.3,1), transform .5s cubic-bezier(.16,1,.3,1), background .3s;
+  }
+  #toTop.show{ opacity:1; transform:translateY(0); pointer-events:auto; }
+  #toTop:hover{ background:rgba(30,30,30,.7); }
+  #toTop svg{ width:15px; height:15px; }
+  @media (prefers-reduced-motion: reduce){ #toTop{ transition:opacity .3s; } }
+
+  /* thin scroll progress — right edge */
+  #scrollProgress{
+    position:fixed; top:0; right:0; z-index:45;
+    width:2px; height:100vh;
+    background:rgba(255,255,255,.06);
+    pointer-events:none;
+  }
+  #scrollProgress .fill{
+    width:100%; height:0%;
+    background:rgba(255,255,255,.32);
+    transition:height .1s linear;
+  }
+  @media (max-width:760px){ #scrollProgress{ display:none; } }
+  /* Featured — true masonry (CSS columns): each card keeps its natural aspect ratio,
+     next card flows into free space instead of waiting for the row's tallest item */
+  .featured-grid{ display:block !important; column-count:4; column-gap:18px; }
+  .featured-grid > [data-card]{ break-inside:avoid; -webkit-column-break-inside:avoid; margin-bottom:18px; display:inline-block; width:100%; height:auto !important; }
+  .card-media-vert{ aspect-ratio:9/16 !important; height:auto !important; }
+  @media (max-width:980px){
+    .featured-grid{ column-count:2; column-gap:14px; }
+    .featured-grid > [data-card]{ margin-bottom:14px; }
+  }
+  @media (max-width:640px){
+    .featured-grid{ column-count:1; }
+  }
+  .corp-grid > [data-card]:first-child .corp-media{ aspect-ratio:16/5.5; }
+  .corp-grid > [data-card]:first-child .corp-title{ font-size:clamp(24px,3.2vw,42px) !important; }
+  .corp-grid > [data-card]:not(:first-child) .corp-media{ aspect-ratio:16/4.5; }
+  .corp-grid > [data-card]:not(:first-child) .corp-title{ font-size:clamp(18px,2.2vw,26px) !important; }
+  @media (max-width:760px){
+    .corp-grid > [data-card] .corp-media{ aspect-ratio:16/9 !important; }
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee-track{ animation:none !important; }
+  }
+
+  /* responsive: grids were fixed-column regardless of viewport width */
+  .grid-commercial{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .grid-social{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  @media (max-width:980px){
+    .grid-commercial{grid-template-columns:repeat(2,1fr);}
+    .grid-social{grid-template-columns:repeat(3,1fr);}
+    .grid-why{grid-template-columns:repeat(2,1fr) !important;}
+    .case-split{grid-template-columns:1fr !important;}
+    nav .nav-links{gap:22px !important;}
+  }
+  @media (max-width:640px){
+    .grid-commercial{grid-template-columns:1fr;}
+    .grid-social{grid-template-columns:repeat(2,1fr);}
+    .grid-why{grid-template-columns:1fr !important;}
+    .grid-longform{grid-template-columns:1fr !important;}
+    nav{padding:0 20px !important;}
+    nav .nav-links{display:none !important;}
+    section{padding-left:20px !important;padding-right:20px !important;}
+    .mobile-works{ display:block !important; }
+  }
+  .mobile-works{ display:none; position:relative; }
+  .mobile-works summary{ list-style:none; cursor:pointer; }
+  .mobile-works summary::-webkit-details-marker{ display:none; }
+  .mobile-works[open] summary{ color:#f2f2f0; }
+  .mobile-works .mw-panel{
+    position:absolute; top:calc(100% + 10px); right:0;
+    background:rgba(10,10,11,.96); backdrop-filter:blur(14px);
+    border:1px solid rgba(255,255,255,.1); border-radius:14px;
+    padding:10px; min-width:180px;
+    display:flex; flex-direction:column; gap:2px;
+  }
+  .mobile-works .mw-panel a{
+    padding:10px 12px; border-radius:8px; font-size:14px;
+    color:rgba(242,242,240,.8);
+  }
+  .mobile-works .mw-panel a:hover{ background:rgba(255,255,255,.06); color:#f2f2f0; }
+  section[id], footer[id]{ scroll-margin-top:90px; }
+  @media (prefers-reduced-motion: reduce){
+    [data-reveal], [data-card]{ opacity:1 !important; transform:none !important; transition:none !important; }
+  }
+</style>
+</helmet>
+<div ref="{{ setRoot }}" style="position:relative;min-height:100vh;background:#060606;color:#f2f2f0;font-family:'Onest',system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;">
+
+  <div ref="{{ setBgFlow }}" style="position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(120% 80% at 40% 30%,rgba(96,101,116,.12),rgba(5,5,6,0) 60%);"></div>
+  <div ref="{{ setBgFlow2 }}" style="position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(85% 65% at 70% 60%,rgba(70,76,92,.08),rgba(5,5,6,0) 62%);"></div>
+  <div ref="{{ setGrain }}" style="position:fixed;inset:0;pointer-events:none;z-index:3;opacity:.045;mix-blend-mode:overlay;background-image:url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E&quot;);background-size:170px;"></div>
+
+  <div style="position:relative;z-index:2;">
+
+    <nav id="nav" style="position:fixed;top:0;left:0;right:0;z-index:40;display:flex;align-items:center;justify-content:space-between;height:74px;padding:0 40px;background:rgba(6,6,6,.55);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.06);opacity:0;transition:opacity 1s cubic-bezier(.16,1,.3,1);">
+      <a href="#top" style="font-family:'Switzer';font-weight:600;font-size:21px;letter-spacing:.01em;">drobvideo</a>
+      <div class="nav-links" style="display:flex;align-items:center;gap:34px;font-size:14px;letter-spacing:.02em;color:rgba(242,242,240,.72);">
+        <a href="#commercial">Commercial</a>
+        <a href="#reels">Social</a>
+        <a href="#corporate">Corporate</a>
+        <a href="#longform">Long Form</a>
+      </div>
+      <div style="display:flex;align-items:center;gap:16px;">
+        <details class="mobile-works">
+          <summary style="font-size:13px;letter-spacing:.04em;color:rgba(242,242,240,.75);border:1px solid rgba(255,255,255,.18);border-radius:100px;padding:7px 14px;" data-en="Works">Работы</summary>
+          <div class="mw-panel">
+            <a href="#commercial">Commercial</a>
+            <a href="#reels" data-en="Social">Social</a>
+            <a href="#corporate" data-en="Corporate">Corporate</a>
+            <a href="#longform">Long Form</a>
+          </div>
+        </details>
+        <button onClick="{{ toggleLang }}" style="font-family:inherit;cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,.18);color:#f2f2f0;border-radius:100px;padding:7px 14px;font-size:12px;letter-spacing:.08em;">RU / EN</button>
+        <a href="#footer-contact" style="border:1px solid rgba(255,255,255,.9);border-radius:100px;padding:9px 20px;font-size:13px;letter-spacing:.04em;" data-en="Contact">Контакт</a>
+      </div>
+    </nav>
+
+    <section id="top" style="position:relative;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 40px 60px;">
+      <div style="position:absolute;inset:0;overflow:hidden;">
+        <img src="uploads/covers/ALMI.png" alt="" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;">
+        <div style="position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 120% at 50% 40%,rgba(6,6,6,.35),rgba(6,6,6,.78) 70%,#060606);"></div>
+      </div>
+      <div style="position:relative;max-width:1280px;margin:0 auto;width:100%;">
+        <div style="display:flex;align-items:center;gap:14px;margin-bottom:26px;">
+          <span style="width:8px;height:8px;border-radius:50%;background:#f2f2f0;"></span>
+          <span style="font-size:14px;letter-spacing:.22em;text-transform:uppercase;color:rgba(242,242,240,.62);">Post Production</span>
+        </div>
+        <h1 style="font-family:'Onest';font-weight:500;font-size:clamp(48px,8.5vw,140px);line-height:.96;letter-spacing:-.02em;margin:0;max-width:13.5ch;text-wrap:balance;" data-en="Editing that turns footage into a story.">Монтаж, который превращает кадры в историю.</h1>
+        <div style="display:flex;flex-wrap:wrap;align-items:flex-end;gap:48px;margin-top:52px;">
+          <button onClick="{{ openReel }}" style="font-family:inherit;cursor:pointer;display:flex;align-items:center;gap:16px;background:transparent;border:none;color:#f2f2f0;padding:0;">
+            <span style="width:66px;height:66px;border-radius:50%;border:1px solid rgba(255,255,255,.55);display:flex;align-items:center;justify-content:center;font-size:15px;transition:background .35s,color .35s,transform .35s;" style-hover="background:#f2f2f0;color:#0a0a0a;transform:scale(1.03);">▶</span>
+            <span style="font-size:16px;letter-spacing:.04em;" data-en="Watch showreel">Смотреть шоурил</span>
+          </button>
+          <div style="display:flex;gap:44px;margin-left:auto;">
+            <div>
+              <div style="font-family:'Clash Display';font-weight:600;font-size:38px;line-height:1;">4+</div>
+              <div style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:rgba(242,242,240,.55);margin-top:6px;" data-en="Years">Года</div>
+            </div>
+            <div>
+              <div style="font-family:'Clash Display';font-weight:600;font-size:38px;line-height:1;">800+</div>
+              <div style="font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:rgba(242,242,240,.55);margin-top:6px;" data-en="Projects">Проектов</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div style="border-top:1px solid rgba(255,255,255,.07);border-bottom:1px solid rgba(255,255,255,.07);overflow:hidden;">
+      <div data-reveal style="max-width:1280px;margin:0 auto;padding:22px 40px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px;font-size:15px;letter-spacing:.02em;color:rgba(242,242,240,.6);">
+        <a href="#commercial">Commercial</a><span style="opacity:.4;">•</span>
+        <a href="#reels">Social</a><span style="opacity:.4;">•</span>
+        <a href="#corporate">Corporate</a><span style="opacity:.4;">•</span>
+        <a href="#longform">Long Form</a>
+        <span style="margin-left:auto;color:rgba(242,242,240,.4);" data-en="Editing · Color · Sound">Монтаж · Цвет · Звук</span>
+      </div>
+    </div>
+
+    <div style="border-bottom:1px solid rgba(255,255,255,.07);overflow:hidden;padding:20px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);">
+      <div class="marquee-track" style="display:flex;width:max-content;animation:marquee-scroll 34s linear infinite;">
+        <div style="display:flex;align-items:center;gap:52px;padding-right:52px;font-family:'Onest';font-weight:600;font-size:21px;letter-spacing:.005em;color:rgba(242,242,240,.5);white-space:nowrap;">
+          <span>ПАО «Газпром»</span><span>Capital Group</span><span>«Салым Петролеум Девелопмент»</span><span>ОЦ «Сириус»</span><span>Pepsi Беларусь</span><span>Bambino</span><span>БЬЮТИГОЛИК</span><span>АЛМИ</span><span>КЦ Зеленоград</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:52px;padding-right:52px;font-family:'Onest';font-weight:600;font-size:21px;letter-spacing:.005em;color:rgba(242,242,240,.5);white-space:nowrap;" aria-hidden="true">
+          <span>ПАО «Газпром»</span><span>Capital Group</span><span>«Салым Петролеум Девелопмент»</span><span>ОЦ «Сириус»</span><span>Pepsi Беларусь</span><span>Bambino</span><span>БЬЮТИГОЛИК</span><span>АЛМИ</span><span>КЦ Зеленоград</span>
+        </div>
+      </div>
+    </div>
+
+    <section id="featured" style="max-width:1280px;margin:0 auto;padding:100px 40px 40px;">
+      <div data-reveal style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:54px;">
+        <div>
+          <div style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,242,240,.5);margin-bottom:18px;" data-en="Selected Work">Избранное</div>
+          <h2 style="font-family:'Onest';font-weight:600;font-size:clamp(34px,5vw,68px);line-height:1;letter-spacing:-.02em;margin:0;" data-en="Selected Work">Избранные проекты</h2>
+        </div>
+        <p style="max-width:38ch;font-size:16px;line-height:1.55;color:rgba(242,242,240,.6);margin:0;" data-en="A curated exhibition of the strongest work, not a complete archive of everything ever edited.">Не полный архив, а тщательно отобранные работы, которые точнее всего показывают уровень.</p>
+      </div>
+      <div data-reveal-group class="featured-grid" style="display:grid;">
+        <sc-for list="{{ featured }}" as="item" hint-placeholder-count="6">
+          <div data-card style="position:relative;">
+            <div class="{{ item.mediaClass }}" style="position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0e;transition:box-shadow .6s, filter .4s;" style-hover="box-shadow:0 28px 64px -32px rgba(0,0,0,.9);filter:brightness(1.06);">
+              <img src="{{ item.img }}" alt="{{ item.title }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(6,6,6,.85),rgba(6,6,6,0) 55%);"></div>
+              <div style="position:absolute;left:16px;right:16px;bottom:15px;display:flex;flex-direction:column;gap:7px;pointer-events:none;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <button onClick="{{ item.onOpen }}" aria-label="Смотреть {{ item.title }}" style="font-family:inherit;pointer-events:auto;cursor:pointer;flex:none;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(10,10,12,.35);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;transition:background .3s,color .3s;padding:0;" style-hover="background:rgba(255,255,255,.94);color:#0a0a0a;">▶</button>
+                  <span style="font-size:14px;font-weight:500;color:#f2f2f0;text-wrap:pretty;">{{ item.title }}</span>
+                </div>
+                <span style="font-size:12px;letter-spacing:.03em;color:rgba(242,242,240,.55);margin-left:56px;">{{ item.views }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+        <section id="bambino" style="max-width:1280px;margin:0 auto;padding:100px 40px 40px;">
+      <div data-reveal class="case-split" style="display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:34px;background:linear-gradient(160deg,rgba(20,20,24,.55),rgba(10,10,12,.2));">
+        <div style="display:flex;flex-direction:column;gap:16px;">
+          <div style="position:relative;aspect-ratio:4/5;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+            <img src="uploads/covers/Bambino.png" alt="Bambino" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          </div>
+          <div style="position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0c0c0e;padding:28px 30px;display:flex;flex-direction:column;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="width:7px;height:7px;border-radius:50%;background:#ff3b3b;"></span>
+              <span style="font-family:'Onest';font-weight:500;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,242,240,.45);">YouTube Analytics</span>
+            </div>
+            <div style="display:flex;gap:36px;">
+              <div>
+                <div style="font-family:'Clash Display';font-weight:600;font-size:clamp(30px,4vw,44px);line-height:1;">1.5M</div>
+                <div style="font-family:'Onest';font-size:11px;letter-spacing:.08em;color:rgba(242,242,240,.5);margin-top:8px;">просмотров</div>
+              </div>
+              <div>
+                <div style="font-family:'Clash Display';font-weight:600;font-size:clamp(30px,4vw,44px);line-height:1;">37K</div>
+                <div style="font-family:'Onest';font-size:11px;letter-spacing:.08em;color:rgba(242,242,240,.5);margin-top:8px;">лайков</div>
+              </div>
+              <div>
+                <div style="font-family:'Clash Display';font-weight:600;font-size:clamp(30px,4vw,44px);line-height:1;">1 744</div>
+                <div style="font-family:'Onest';font-size:11px;letter-spacing:.08em;color:rgba(242,242,240,.5);margin-top:8px;">комментария</div>
+              </div>
+            </div>
+          </div>
+          <div style="position:relative;aspect-ratio:16/10;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0c0c0e;padding:26px 28px;display:flex;flex-direction:column;justify-content:space-between;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="width:7px;height:7px;border-radius:50%;background:#25f4ee;"></span>
+              <span style="font-family:'Onest';font-weight:500;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,242,240,.45);">TikTok Analytics</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:20px 16px;">
+              <div>
+                <div style="font-family:'Clash Display';font-weight:600;font-size:clamp(22px,3vw,32px);line-height:1;">722K</div>
+                <div style="font-family:'Onest';font-size:10.5px;letter-spacing:.06em;color:rgba(242,242,240,.5);margin-top:6px;">просмотров</div>
+              </div>
+              <div>
+                <div style="font-family:'Clash Display';font-weight:600;font-size:clamp(22px,3vw,32px);line-height:1;">30.3K</div>
+                <div style="font-family:'Onest';font-size:10.5px;letter-spacing:.06em;color:rgba(242,242,240,.5);margin-top:6px;">лайков</div>
+              </div>
+              <div>
+                <div style="font-family:'Clash Display';font-weight:600;font-size:clamp(22px,3vw,32px);line-height:1;">973</div>
+                <div style="font-family:'Onest';font-size:10.5px;letter-spacing:.06em;color:rgba(242,242,240,.5);margin-top:6px;">комментария</div>
+              </div>
+              <div>
+                <div style="font-family:'Clash Display';font-weight:600;font-size:clamp(22px,3vw,32px);line-height:1;">7 687</div>
+                <div style="font-family:'Onest';font-size:10.5px;letter-spacing:.06em;color:rgba(242,242,240,.5);margin-top:6px;">сохранений</div>
+              </div>
+              <div>
+                <div style="font-family:'Clash Display';font-weight:600;font-size:clamp(22px,3vw,32px);line-height:1;">914</div>
+                <div style="font-family:'Onest';font-size:10.5px;letter-spacing:.06em;color:rgba(242,242,240,.5);margin-top:6px;">пересланных</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,242,240,.5);margin-bottom:20px;" data-en="Featured Case">Кейс</div>
+          <div style="font-family:'Clash Display';font-weight:600;font-size:clamp(52px,7vw,96px);line-height:.92;letter-spacing:-.02em;margin-bottom:14px;">2 222 000</div>
+          <div style="font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,242,240,.5);margin-bottom:22px;" data-en="views across two platforms">просмотров на двух платформах</div>
+          <h3 style="font-family:'Onest';font-weight:600;font-size:clamp(24px,2.8vw,36px);line-height:1.1;letter-spacing:-.02em;margin:0 0 10px;" data-en="One film. Two platforms.">Один фильм. Две платформы.</h3>
+          <div style="font-size:13px;letter-spacing:.04em;color:rgba(242,242,240,.5);margin-bottom:24px;" data-en="Social campaign built on emotional storytelling.">Рекламная кампания для соцсетей, построенная на эмоциональном сторителлинге.</div>
+          <blockquote style="margin:0 0 22px;font-size:20px;font-style:italic;color:#f2f2f0;">«Ну талантище»<span style="display:block;font-style:normal;font-size:13px;letter-spacing:.06em;color:rgba(242,242,240,.5);margin-top:8px;" data-en="— Evgeniya, client">— Evgeniya, заказчик</span></blockquote>
+          <p style="font-size:16px;line-height:1.6;color:rgba(242,242,240,.68);margin:0 0 12px;" data-en="Horror-gaming aesthetic. The feel of an old video game, drop frame, dense sound, AI voiceover.">Хоррор-гейминг эстетика. Атмосфера старой видеоигры, drop frame, плотный звук, AI-озвучка.</p>
+          <p style="font-size:16px;line-height:1.6;color:rgba(242,242,240,.68);margin:0 0 28px;" data-en="Released on TikTok and YouTube Shorts at once. The audience grew within days.">Вышел в TikTok и на YouTube Shorts одновременно. Аудитория выросла за несколько дней.</p>
+
+          <div style="margin-bottom:20px;">
+            <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,242,240,.45);margin-bottom:12px;">YouTube</div>
+            <div style="display:flex;gap:38px;border-top:1px solid rgba(255,255,255,.1);padding-top:18px;">
+              <div><div style="font-family:'Clash Display';font-weight:600;font-size:30px;line-height:1;">1.5M</div><div style="font-size:12px;letter-spacing:.08em;color:rgba(242,242,240,.5);margin-top:7px;" data-en="views">просмотров</div></div>
+              <div><div style="font-family:'Clash Display';font-weight:600;font-size:30px;line-height:1;">37K</div><div style="font-size:12px;letter-spacing:.08em;color:rgba(242,242,240,.5);margin-top:7px;" data-en="likes">лайков</div></div>
+              <div><div style="font-family:'Clash Display';font-weight:600;font-size:30px;line-height:1;">1 744</div><div style="font-size:12px;letter-spacing:.08em;color:rgba(242,242,240,.5);margin-top:7px;" data-en="comments">комментария</div></div>
+            </div>
+          </div>
+
+          <div>
+            <div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(242,242,240,.45);margin-bottom:12px;">TikTok</div>
+            <div style="display:flex;gap:38px;border-top:1px solid rgba(255,255,255,.1);padding-top:18px;">
+              <div><div style="font-family:'Clash Display';font-weight:600;font-size:30px;line-height:1;">722K</div><div style="font-size:12px;letter-spacing:.08em;color:rgba(242,242,240,.5);margin-top:7px;" data-en="views">просмотров</div></div>
+              <div><div style="font-family:'Clash Display';font-weight:600;font-size:30px;line-height:1;">30.3K</div><div style="font-size:12px;letter-spacing:.08em;color:rgba(242,242,240,.5);margin-top:7px;" data-en="likes">лайков</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="commercial" style="max-width:1280px;margin:0 auto;padding:100px 40px 40px;">
+      <div data-reveal style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:54px;">
+        <div>
+          <div style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,242,240,.5);margin-bottom:18px;">01 — Commercial</div>
+          <h2 style="font-family:'Onest';font-weight:600;font-size:clamp(34px,5vw,68px);line-height:1;letter-spacing:-.02em;margin:0;" data-en="Commercial">Реклама брендов</h2>
+        </div>
+        <p style="max-width:34ch;font-size:16px;line-height:1.55;color:rgba(242,242,240,.6);margin:0;" data-en="Advertising for brands — rhythm, color and sound that sell the idea.">Ролики для брендов — ритм, цвет и звук, которые продают идею.</p>
+      </div>
+      <div data-reveal-group class="grid-commercial" style="display:grid;">
+        <sc-for list="{{ commercial }}" as="item" hint-placeholder-count="3">
+          <div data-card style="position:relative;">
+            <div style="position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0e;transition:transform .6s cubic-bezier(.16,1,.3,1),box-shadow .6s;" style-hover="transform:translateY(-4px);box-shadow:0 28px 64px -32px rgba(0,0,0,.9);">
+              <img src="{{ item.img }}" alt="{{ item.title }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(6,6,6,.85),rgba(6,6,6,0) 55%);"></div>
+              <div style="position:absolute;left:16px;right:16px;bottom:15px;display:flex;flex-direction:column;gap:7px;pointer-events:none;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <button onClick="{{ item.onOpen }}" aria-label="Смотреть {{ item.title }}" style="font-family:inherit;pointer-events:auto;cursor:pointer;flex:none;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(10,10,12,.35);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;transition:background .3s,color .3s,transform .3s;padding:0;" style-hover="background:rgba(255,255,255,.94);color:#0a0a0a;transform:scale(1.04);">▶</button>
+                  <span style="font-size:14px;font-weight:500;color:#f2f2f0;text-wrap:pretty;">{{ item.title }}</span>
+                </div>
+                <span style="font-size:12px;letter-spacing:.03em;color:rgba(242,242,240,.55);margin-left:56px;">{{ item.views }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="corporate" style="max-width:1280px;margin:0 auto;padding:100px 40px 40px;">
+      <div data-reveal style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:54px;">
+        <div>
+          <div style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,242,240,.5);margin-bottom:18px;">02 — Corporate</div>
+          <h2 style="font-family:'Onest';font-weight:600;font-size:clamp(34px,5vw,68px);line-height:1;letter-spacing:-.02em;margin:0;" data-en="Corporate">Корпоративные фильмы</h2>
+        </div>
+        <p style="max-width:36ch;font-size:16px;line-height:1.55;color:rgba(242,242,240,.6);margin:0;" data-en="Corporate films, events, conferences, reporting projects.">Корпоративные фильмы, мероприятия, конференции, отчётные проекты.</p>
+      </div>
+      <div data-reveal-group class="corp-grid" style="display:grid;grid-template-columns:1fr;gap:14px;">
+        <sc-for list="{{ corporate }}" as="item" hint-placeholder-count="1">
+          <div data-card style="position:relative;">
+            <div class="corp-media" style="position:relative;aspect-ratio:21/9;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0e;transition:transform .6s cubic-bezier(.16,1,.3,1),box-shadow .6s;" style-hover="transform:translateY(-4px);box-shadow:0 28px 64px -32px rgba(0,0,0,.9);">
+              <img src="{{ item.img }}" alt="{{ item.title }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(6,6,6,.8),rgba(6,6,6,0) 60%);"></div>
+              <div style="position:absolute;left:26px;right:26px;bottom:24px;display:flex;flex-direction:column;gap:8px;pointer-events:none;">
+                <div style="display:flex;align-items:center;gap:16px;">
+                  <button onClick="{{ item.onOpen }}" aria-label="Смотреть {{ item.title }}" style="font-family:inherit;pointer-events:auto;cursor:pointer;flex:none;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(10,10,12,.35);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;transition:background .3s,color .3s,transform .3s;padding:0;" style-hover="background:rgba(255,255,255,.94);color:#0a0a0a;transform:scale(1.04);">▶</button>
+                  <span class="corp-title" style="font-family:'Onest';font-weight:600;font-size:clamp(22px,3vw,38px);letter-spacing:-.01em;color:#f2f2f0;">{{ item.title }}</span>
+                </div>
+                <span style="font-size:13px;letter-spacing:.03em;color:rgba(242,242,240,.55);margin-left:68px;">{{ item.views }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="reels" style="max-width:1280px;margin:0 auto;padding:100px 40px 40px;">
+      <div data-reveal style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:54px;">
+        <div>
+          <div style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,242,240,.5);margin-bottom:18px;">03 — Social</div>
+          <h2 style="font-family:'Onest';font-weight:600;font-size:clamp(34px,5vw,68px);line-height:1;letter-spacing:-.02em;margin:0;" data-en="Social Content">Контент для соцсетей</h2>
+        </div>
+        <p style="max-width:34ch;font-size:16px;line-height:1.55;color:rgba(242,242,240,.6);margin:0;" data-en="Vertical content for social media and creators — 600+ shipped.">Вертикальный контент для соцсетей и авторов — более 600 роликов.</p>
+      </div>
+      <div data-reveal-group class="grid-social" style="display:grid;">
+        <sc-for list="{{ social }}" as="item" hint-placeholder-count="8">
+          <div data-card style="position:relative;">
+            <div style="position:relative;aspect-ratio:9/16;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0e;transition:transform .6s cubic-bezier(.16,1,.3,1),box-shadow .6s;" style-hover="transform:translateY(-4px);box-shadow:0 28px 64px -32px rgba(0,0,0,.9);">
+              <img src="{{ item.img }}" alt="{{ item.title }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(6,6,6,.8),rgba(6,6,6,0) 48%);"></div>
+              <div style="position:absolute;left:14px;right:14px;bottom:14px;display:flex;flex-direction:column;gap:6px;pointer-events:none;">
+                <div style="display:flex;align-items:center;gap:11px;">
+                  <button onClick="{{ item.onOpen }}" aria-label="Смотреть {{ item.title }}" style="font-family:inherit;pointer-events:auto;cursor:pointer;flex:none;width:42px;height:42px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(10,10,12,.35);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;transition:background .3s,color .3s,transform .3s;padding:0;" style-hover="background:rgba(255,255,255,.94);color:#0a0a0a;transform:scale(1.04);">▶</button>
+                  <span style="font-size:12.5px;font-weight:500;line-height:1.25;color:#f2f2f0;text-wrap:pretty;">{{ item.title }}</span>
+                </div>
+                <span style="font-size:11px;letter-spacing:.03em;color:rgba(242,242,240,.55);margin-left:53px;">{{ item.views }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="longform" style="max-width:1280px;margin:0 auto;padding:100px 40px 40px;">
+      <div data-reveal style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:54px;">
+        <div>
+          <div style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,242,240,.5);margin-bottom:18px;">04 — Long Form</div>
+          <h2 style="font-family:'Onest';font-weight:600;font-size:clamp(34px,5vw,68px);line-height:1;letter-spacing:-.02em;margin:0;" data-en="Long Form">Большие форматы</h2>
+        </div>
+        <p style="max-width:36ch;font-size:16px;line-height:1.55;color:rgba(242,242,240,.6);margin:0;" data-en="Documentaries, lectures, YouTube, big stories.">Документальные фильмы, лекции, YouTube, большие истории.</p>
+      </div>
+      <div data-reveal-group class="grid-longform" style="display:grid;grid-template-columns:repeat(2,1fr);gap:22px;">
+        <sc-for list="{{ docs }}" as="item" hint-placeholder-count="2">
+          <div data-card style="position:relative;">
+            <div style="position:relative;aspect-ratio:16/9;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.08);background:#0d0d0e;transition:transform .6s cubic-bezier(.16,1,.3,1),box-shadow .6s;" style-hover="transform:translateY(-4px);box-shadow:0 28px 64px -32px rgba(0,0,0,.9);">
+              <img src="{{ item.img }}" alt="{{ item.title }}" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+              <div style="position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,rgba(6,6,6,.85),rgba(6,6,6,0) 55%);"></div>
+              <div style="position:absolute;left:16px;right:16px;bottom:15px;display:flex;flex-direction:column;gap:7px;pointer-events:none;">
+                <div style="display:flex;align-items:center;gap:12px;">
+                  <button onClick="{{ item.onOpen }}" aria-label="Смотреть {{ item.title }}" style="font-family:inherit;pointer-events:auto;cursor:pointer;flex:none;width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(10,10,12,.35);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff;transition:background .3s,color .3s,transform .3s;padding:0;" style-hover="background:rgba(255,255,255,.94);color:#0a0a0a;transform:scale(1.04);">▶</button>
+                  <span style="font-size:14px;font-weight:500;color:#f2f2f0;text-wrap:pretty;">{{ item.title }}</span>
+                </div>
+                <span style="font-size:12px;letter-spacing:.03em;color:rgba(242,242,240,.55);margin-left:56px;">{{ item.views }}</span>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </section>
+
+    <section id="about" style="max-width:1280px;margin:0 auto;padding:80px 40px 60px;">
+      <div data-reveal class="case-split" style="display:grid;grid-template-columns:.85fr 1.15fr;gap:56px;align-items:start;">
+        <div style="position:relative;aspect-ratio:4/5;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.08);">
+          <img src="uploads/covers/artem.jpg" alt="Артём Дробушевич" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:top;">
+        </div>
+        <div>
+          <div style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,242,240,.5);margin-bottom:22px;" data-en="Approach">Подход</div>
+          <p style="font-family:'Onest';font-weight:500;font-size:clamp(24px,2.7vw,36px);line-height:1.18;letter-spacing:-.01em;margin:0 0 30px;" data-en="I believe editing should never distract from the story.">Я считаю, что монтаж не должен отвлекать от истории.</p>
+          <p style="font-size:17px;line-height:1.65;color:rgba(242,242,240,.68);margin:0 0 34px;max-width:56ch;" data-en="The best editing is the kind viewers never notice. Commercial, documentary or social content — the goal is always the same: hold attention and leave an impression.">Лучший монтаж — тот, который зритель не замечает. Реклама, документалистика, контент для соцсетей — цель всегда одна: удержать внимание и оставить впечатление.</p>
+          <div style="display:flex;gap:44px;margin-bottom:32px;">
+            <div><div style="font-family:'Clash Display';font-weight:600;font-size:34px;line-height:1;">600+</div><div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(242,242,240,.5);margin-top:8px;" data-en="vertical">вертикальных</div></div>
+            <div><div style="font-family:'Clash Display';font-weight:600;font-size:34px;line-height:1;">4+</div><div style="font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:rgba(242,242,240,.5);margin-top:8px;" data-en="years of experience">года опыта</div></div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:10px;">
+            <span style="border:1px solid rgba(255,255,255,.16);border-radius:100px;padding:8px 16px;font-size:13px;color:rgba(242,242,240,.78);">DaVinci Resolve</span>
+            <span style="border:1px solid rgba(255,255,255,.16);border-radius:100px;padding:8px 16px;font-size:13px;color:rgba(242,242,240,.78);">After Effects</span>
+            <span style="border:1px solid rgba(255,255,255,.16);border-radius:100px;padding:8px 16px;font-size:13px;color:rgba(242,242,240,.78);">Final Cut</span>
+            <span style="border:1px solid rgba(255,255,255,.16);border-radius:100px;padding:8px 16px;font-size:13px;color:rgba(242,242,240,.78);">Motion</span>
+            <span style="border:1px solid rgba(255,255,255,.16);border-radius:100px;padding:8px 16px;font-size:13px;color:rgba(242,242,240,.78);">AI</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="why" style="max-width:1280px;margin:0 auto;padding:80px 40px 40px;">
+      <div data-reveal style="margin-bottom:48px;">
+        <div style="font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:rgba(242,242,240,.5);margin-bottom:18px;" data-en="Why Clients Come Back">Почему ко мне возвращаются</div>
+      </div>
+      <div data-reveal-group class="grid-why" style="display:grid;grid-template-columns:repeat(4,1fr);gap:32px;">
+        <div data-card>
+          <h3 style="font-family:'Onest';font-weight:600;font-size:19px;letter-spacing:-.005em;margin:0 0 12px;" data-en="Story over spectacle">История, а не эффект</h3>
+          <p style="font-size:14px;line-height:1.6;color:rgba(242,242,240,.6);margin:0;" data-en="A cut stays only if it strengthens the scene — otherwise it goes.">Переход остаётся в монтаже, только если усиливает сцену. Иначе — вырезается.</p>
+        </div>
+        <div data-card>
+          <h3 style="font-family:'Onest';font-weight:600;font-size:19px;letter-spacing:-.005em;margin:0 0 12px;" data-en="Volume without losing pace">Объём без потери темпа</h3>
+          <p style="font-size:14px;line-height:1.6;color:rgba(242,242,240,.6);margin:0;" data-en="Multi-camera edits and large volumes of footage are a working mode, not an exception.">Многокамерный монтаж и большие объёмы материала — рабочий режим, не исключение.</p>
+        </div>
+        <div data-card>
+          <h3 style="font-family:'Onest';font-weight:600;font-size:19px;letter-spacing:-.005em;margin:0 0 12px;" data-en="A different logic per platform">Своя логика на каждой площадке</h3>
+          <p style="font-size:14px;line-height:1.6;color:rgba(242,242,240,.6);margin:0;" data-en="YouTube, TikTok and commercial campaigns need different editing — and get it.">YouTube, TikTok и рекламные кампании требуют разного монтажа — и получают его.</p>
+        </div>
+        <div data-card>
+          <h3 style="font-family:'Onest';font-weight:600;font-size:19px;letter-spacing:-.005em;margin:0 0 12px;" data-en="Structure, not guesswork">Структура, а не на глаз</h3>
+          <p style="font-size:14px;line-height:1.6;color:rgba(242,242,240,.6);margin:0;" data-en="Media pool structure and separate audio tracks on every project — not improvised as it goes.">Структура медиапула и раздельные аудио-дорожки в каждом проекте — не на глаз, по системе.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer id="footer-contact" style="border-top:1px solid rgba(255,255,255,.08);margin-top:40px;">
+      <div style="max-width:1280px;margin:0 auto;padding:140px 40px 44px;">
+        <div style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:30px;margin-bottom:90px;">
+          <h2 style="font-family:'Onest';font-weight:600;font-size:clamp(40px,6.5vw,104px);line-height:.95;letter-spacing:-.03em;margin:0;"><span data-en="Got a project? —">Есть проект? —</span><br><a href="https://t.me/temadrob" target="_blank" rel="noopener noreferrer" style="text-decoration:underline;text-underline-offset:10px;text-decoration-thickness:2px;" data-en="write on Telegram">напишите в Telegram</a></h2>
+          <a href="https://t.me/temadrob" target="_blank" rel="noopener noreferrer" style="flex-shrink:0;width:96px;height:96px;border-radius:50%;background:#f2f2f0;color:#0a0a0a;display:flex;align-items:center;justify-content:center;font-size:30px;transition:transform .5s cubic-bezier(.16,1,.3,1);" style-hover="transform:scale(1.04);opacity:1;">↗</a>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:14px 26px;font-size:15px;color:rgba(242,242,240,.72);border-top:1px solid rgba(255,255,255,.08);padding-top:26px;">
+          <a href="https://t.me/temadrob" target="_blank" rel="noopener noreferrer">Telegram</a>
+          <a href="https://www.instagram.com/drobvideo/" target="_blank" rel="noopener noreferrer">Instagram*</a>
+          <a href="https://www.youtube.com/@drobvideo" target="_blank" rel="noopener noreferrer">YouTube</a>
+          <a href="mailto:375333780177tema@gmail.com">Email</a>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;margin-top:38px;font-size:13px;color:rgba(242,242,240,.42);">
+          <span data-en="© drobvideo, 2026 — Minsk · Moscow · Remote">© drobvideo, 2026 — Минск · Москва · Remote</span>
+          <span style="max-width:60ch;" data-en="* Instagram is owned by Meta, recognized as an extremist organization and banned in the territory of the RF.">* Instagram принадлежит компании Meta, признанной экстремистской организацией и запрещённой на территории РФ.</span>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <div id="scrollProgress"><div class="fill"></div></div>
+  <div id="cutFlash" style="position:fixed;inset:0;z-index:200;background:#000;opacity:0;pointer-events:none;"></div>
+  <button id="toTop" aria-label="Наверх">
+    <svg viewBox="0 0 24 24" fill="none"><path d="M6 15L12 9L18 15" stroke="#f2f2f0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+
+  <sc-if value="{{ modalOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closeModal }}" role="dialog" aria-modal="true" aria-label="{{ modalTitle }}" style="position:fixed;inset:0;z-index:60;background:rgba(4,4,5,.84);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:5vh 5vw;">
+      <div onClick="{{ stopProp }}" style="position:relative;width:min(1080px,100%);">
+        <div style="position:relative;aspect-ratio:16/9;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.12);background:#0c0c0e;display:flex;align-items:center;justify-content:center;">
+          <sc-if value="{{ modalVideo }}">
+            <iframe src="https://www.youtube.com/embed/{{ modalVideo }}?autoplay=1&rel=0&modestbranding=1" title="{{ modalTitle }}" allow="autoplay; encrypted-media; fullscreen" allowfullscreen style="position:absolute;inset:0;width:100%;height:100%;border:0;"></iframe>
+          </sc-if>
+          <sc-if value="{{ modalIsImage }}">
+            <img src="{{ modalImg }}" alt="{{ modalTitle }}" style="max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;">
+          </sc-if>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px;">
+          <span style="font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:rgba(242,242,240,.6);">{{ modalTitle }}</span>
+          <button onClick="{{ closeModal }}" style="font-family:inherit;cursor:pointer;background:transparent;border:1px solid rgba(255,255,255,.2);color:#f2f2f0;border-radius:100px;padding:9px 18px;font-size:13px;letter-spacing:.04em;" data-en="Close ✕">Закрыть ✕</button>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;glow&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#7c8290&quot;,&quot;options&quot;:[&quot;#7c8290&quot;,&quot;#5f6f96&quot;,&quot;#8f7a5c&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Atmosphere&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:7,&quot;min&quot;:0,&quot;max&quot;:10,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Atmosphere&quot;},&quot;grain&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Atmosphere&quot;}}">
+class Component extends DCLogic {
+  state = { modalOpen: false, modalItem: null, lang: 'ru' };
+
+  setRoot = (el) => { this.root = el; };
+  setLight = (el) => { this.light = el; };
+  setGrain = (el) => { this.grain = el; };
+  setBgFlow = (el) => { this.bgFlow = el; };
+  setBgFlow2 = (el) => { this.bgFlow2 = el; };
+
+  hx(h, a) {
+    h = (h || '#e6e8ee').replace('#', '');
+    if (h.length === 3) h = h.split('').map(c => c + c).join('');
+    const n = parseInt(h, 16);
+    return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + a + ')';
+  }
+
+  prep(list) {
+    return list.map(it => ({
+      ...it,
+      mediaClass: it.vert ? 'card-media-vert' : '',
+      onOpen: (e) => { if (e && e.stopPropagation) e.stopPropagation(); this.openItem(it, e); }
+    }));
+  }
+
+  openItem(item, e) {
+    this._lastTrigger = (e && e.currentTarget) || document.activeElement;
+    this.setState({ modalOpen: true, modalItem: item });
+    document.body.style.overflow = 'hidden';
+    this._onKeydown = (ev) => { if (ev.key === 'Escape') this.closeModal(); };
+    document.addEventListener('keydown', this._onKeydown);
+    setTimeout(() => {
+      const closeBtn = document.querySelector('[role="dialog"] button');
+      if (closeBtn) closeBtn.focus();
+    }, 0);
+  }
+  openReel = (e) => { this.openItem({ title: 'Bambino — flagship', video: 'gZfuFPQZGM4', img: 'uploads/covers/Bambino.png' }, e); };
+  closeModal = () => {
+    this.setState({ modalOpen: false, modalItem: null });
+    document.body.style.overflow = '';
+    if (this._onKeydown) { document.removeEventListener('keydown', this._onKeydown); this._onKeydown = null; }
+    if (this._lastTrigger && this._lastTrigger.focus) this._lastTrigger.focus();
+  };
+  stopProp = (e) => { if (e && e.stopPropagation) e.stopPropagation(); };
+
+  toggleLang = () => {
+    const next = this.state.lang === 'ru' ? 'en' : 'ru';
+    this.applyLang(next);
+    this.setState({ lang: next });
+  };
+  applyLang(lang) {
+    if (!this.root) return;
+    this.root.querySelectorAll('[data-en]').forEach(el => {
+      if (el.dataset.ru === undefined) el.dataset.ru = el.textContent;
+      el.textContent = lang === 'en' ? el.dataset.en : el.dataset.ru;
+    });
+  }
+
+  componentDidMount() {
+    if (this.root) {
+      this.root.querySelectorAll('[data-en]').forEach(el => {
+        if (el.dataset.ru === undefined) el.dataset.ru = el.textContent;
+      });
+    }
+    if (this.grain && this.props.grain === false) this.grain.style.display = 'none';
+    this.initReveal();
+    this.initBg();
+    this.initTopNav();
+    this.initDirectorMode();
+  }
+
+  componentWillUnmount() {
+    if (this._mm) window.removeEventListener('mousemove', this._mm);
+    if (this._scroll) window.removeEventListener('scroll', this._scroll);
+    if (this._topNavScroll) window.removeEventListener('scroll', this._topNavScroll);
+    if (this._raf) cancelAnimationFrame(this._raf);
+    if (this._io) this._io.disconnect();
+    if (this._iog) this._iog.disconnect();
+    document.body.style.overflow = '';
+  }
+
+  initTopNav() {
+    const btn = document.getElementById('toTop');
+    const fill = document.querySelector('#scrollProgress .fill');
+    if (!btn && !fill) return;
+    const onScroll = () => {
+      const max = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+      const pct = Math.min(1, Math.max(0, window.scrollY / max));
+      if (fill) fill.style.height = (pct * 100).toFixed(1) + '%';
+      if (btn) btn.classList.toggle('show', pct > 0.45);
+    };
+    this._topNavScroll = onScroll;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    if (btn) {
+      btn.addEventListener('click', () => {
+        const top = document.getElementById('top');
+        if (top) top.scrollIntoView({ behavior: 'smooth' });
+        else window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  }
+
+  initDirectorMode() {
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const nav = document.getElementById('nav');
+
+    // the interface stays out of the way while the film opens — it earns its place once you commit to watching
+    if (nav) {
+      if (reduceMotion) {
+        nav.style.opacity = '1';
+      } else {
+        let revealed = false;
+        const reveal = () => {
+          if (revealed) return;
+          revealed = true;
+          nav.style.opacity = '1';
+          window.removeEventListener('scroll', onFirstScroll);
+        };
+        const onFirstScroll = () => { if (window.scrollY > 30) reveal(); };
+        window.addEventListener('scroll', onFirstScroll, { passive: true });
+        setTimeout(reveal, 2600); // reveals on its own even if nobody scrolls — never permanently hidden
+      }
+    }
+
+    // hard cut — a single dark frame between chapters, not a fade. used sparingly, only at real chapter breaks.
+    if (!reduceMotion) {
+      const flash = document.getElementById('cutFlash');
+      const chapters = ['commercial', 'reels', 'corporate', 'longform']
+        .map(id => document.getElementById(id)).filter(Boolean);
+      if (flash && chapters.length) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(en => {
+            if (en.isIntersecting) {
+              flash.style.transition = 'none';
+              flash.style.opacity = '1';
+              requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                  flash.style.transition = 'opacity .16s ease-out';
+                  flash.style.opacity = '0';
+                });
+              });
+              io.unobserve(en.target);
+            }
+          });
+        }, { threshold: 0, rootMargin: '0px 0px -85% 0px' });
+        chapters.forEach(s => io.observe(s));
+      }
+    }
+  }
+
+  initBg() {
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceMotion) return; // ambient background motion fully disabled — set once, statically, and stop
+    const glow = this.props.glow || '#9aa0b0';
+    const A1 = 0.13, A2 = 0.08;
+    let curP = 0, tgtP = 0;
+    const onScroll = () => {
+      const max = (document.documentElement.scrollHeight - window.innerHeight) || 1;
+      tgtP = Math.min(1, Math.max(0, window.scrollY / max));
+    };
+    this._scroll = onScroll;
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    curP = tgtP;
+    const t0 = performance.now();
+    const tick = (now) => {
+      if (document.hidden) { this._raf = requestAnimationFrame(tick); return; } // pause the visual work, not the loop, while tab is hidden
+      curP += (tgtP - curP) * 0.05;
+      const t = (now - t0) / 1000;
+      const ph = curP * Math.PI * 2;
+      const x1 = 50 + Math.sin(ph * 0.8 + t * 0.13) * 30 + Math.sin(t * 0.06) * 10;
+      const y1 = 34 + Math.cos(ph * 1.1 + t * 0.11) * 26 + Math.sin(t * 0.045) * 9;
+      const s1 = 58 + Math.sin(ph + t * 0.08) * 14;
+      const x2 = 50 + Math.sin(ph * 1.3 + 2 + t * 0.1) * 36 + Math.cos(t * 0.05) * 8;
+      const y2 = 46 + Math.cos(ph * 0.7 + 1 + t * 0.07) * 30;
+      if (this.bgFlow) this.bgFlow.style.background = 'radial-gradient(120% 82% at ' + x1.toFixed(1) + '% ' + y1.toFixed(1) + '%,' + this.hx(glow, A1) + ',rgba(5,5,6,0) ' + s1.toFixed(1) + '%)';
+      if (this.bgFlow2) this.bgFlow2.style.background = 'radial-gradient(85% 66% at ' + x2.toFixed(1) + '% ' + y2.toFixed(1) + '%,' + this.hx(glow, A2) + ',rgba(5,5,6,0) 64%)';
+      this._raf = requestAnimationFrame(tick);
+    };
+    this._raf = requestAnimationFrame(tick);
+  }
+
+  initReveal() {
+    if (!this.root) return;
+    const motion = this.props.motion ?? 7;
+    const dist = 20 + motion * 4;
+    const io = new IntersectionObserver((ents) => {
+      ents.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.style.opacity = '1';
+          en.target.style.transform = 'none';
+          io.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -7% 0px' });
+    this._io = io;
+    this.root.querySelectorAll('[data-reveal]').forEach(el => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(' + dist + 'px)';
+      el.style.transition = 'opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1)';
+      io.observe(el);
+    });
+    const iog = new IntersectionObserver((ents) => {
+      ents.forEach(en => {
+        if (en.isIntersecting) {
+          en.target.querySelectorAll('[data-card]').forEach((c, i) => {
+            c.style.transitionDelay = (i * 80) + 'ms';
+            c.style.opacity = '1';
+            c.style.transform = 'none';
+          });
+          iog.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -4% 0px' });
+    this._iog = iog;
+    this.root.querySelectorAll('[data-reveal-group]').forEach(g => {
+      g.querySelectorAll('[data-card]').forEach(c => {
+        c.style.opacity = '0';
+        c.style.transform = 'translateY(' + (dist + 14) + 'px)';
+        c.style.transition = 'opacity 1s cubic-bezier(.16,1,.3,1), transform 1s cubic-bezier(.16,1,.3,1)';
+      });
+      iog.observe(g);
+    });
+  }
+
+  renderVals() {
+    const modalItem = this.state.modalItem;
+    const B = 'uploads/covers/';
+    // Реальных данных по просмотрам на большинство проектов нет —
+    // показываем категорию вместо выдуманных цифр (см. правило из брифа:
+    // "если нет просмотров — оставить категорию").
+    return {
+      commercial: this.prep([
+        { title: 'Имидж-студия «Подиум»', video: 'wggSRwVaxEo', img: B + 'Podium.png', views: 'Commercial' },
+        { title: 'ALMI', video: 'CPBJvDUuwYk', img: B + 'ALMI.png', views: 'Commercial' },
+        { title: 'КЦ Зеленоград', video: '7KNVivoYzFQ', img: B + 'KC_Zelenograd.png', views: 'Commercial' },
+        { title: 'Сургутский', video: 'YtHPkakfcMI', img: B + 'Myasokombinat.png', views: 'Commercial' },
+        { title: '4 Комнаты — отель & хостел', video: 'gzDpc397S_8', img: B + '4komnatya.png', views: 'Commercial' },
+      ]),
+      social: this.prep([
+        { title: 'Время признаться', video: 'IYGSHRnUc7E', img: B + 'social/vremya-priznatsya.jpg', views: 'Social' },
+        { title: 'Как надо проявляться', video: 'S9yVAB1rOCE', img: B + 'social/kak-nado-proyavlyatsya.jpg', views: 'Social' },
+        { title: 'Многие блогеры лицемерят', video: '9RAXr3QOQY0', img: B + 'social/blogery-licemeryat.jpg', views: 'Social' },
+        { title: 'Салон «Кучеряво»', video: '2fgqo8pD5rU', img: B + 'social/salon-kucheryavo.jpg', views: 'Social' },
+        { title: 'Лучшая пенка для умывания', img: B + 'ig/penka.jpg', views: 'Social' },
+        { title: 'LSA Auto House', img: B + 'social/lsa-auto-house.jpg', views: 'Social' },
+        { title: 'Beauty News', img: B + 'ig/beautynews.jpg', views: 'Social' },
+      ]),
+      corporate: this.prep([
+        { title: 'Сириус — форум', video: '0fhlamQuRes', img: B + 'Сириус.png', views: 'Corporate' },
+        { title: 'Capital Group — Отчётный', video: 'nkeH_NLdP3w', img: B + 'Capital-group.png', views: 'Corporate' },
+        { title: '«СПД» — Победители XXIV Конференции', video: 'fiy28DxxL60', img: B + 'Salym.png', views: 'Corporate' },
+        { title: 'Андрей Ковалёв — Усадьба Гребнево', video: 'm8b0SIhHfG8', img: B + 'Kovalev.png', views: 'Corporate' },
+      ]),
+      docs: this.prep([
+        { title: 'ИИ-лекция — Capital Group', video: 'VnQIG2M8rJY', img: B + 'Марков ИИ-лекция Capital Group.png', views: 'Long Form' },
+        { title: 'Кавказ Discovery — Монголия', video: '_zKsEz0vb_s', img: B + 'Кавказ Discovery - Монголия.png', views: 'Documentary' },
+      ]),
+      featured: this.prep([
+        { title: 'Имидж-студия «Подиум»', video: 'wggSRwVaxEo', img: B + 'Podium.png', views: 'Commercial' },
+        { title: 'ООО «Стройконструкция»', video: 'IqkTcyahR-s', img: B + 'Stroykostrukciya.png', views: 'Commercial' },
+        { title: 'Твой эксперт по красоте', video: 'jqvH7joz0I8', img: B + 'social/ekspert-po-krasote.jpg', views: 'Social', vert: true },
+        { title: 'Miele', video: 'LziDSUq36CI', img: B + 'social/miele.jpg', views: 'Social', vert: true },
+        { title: 'ПАО «Газпром» — IT форум', video: 'hqtSs0mgYHE', img: B + 'Gazprom.png', views: 'Corporate' },
+        { title: 'КЦ Зеленоград', video: '7KNVivoYzFQ', img: B + 'KC_Zelenograd.png', views: 'Commercial' },
+      ]),
+      modalOpen: this.state.modalOpen,
+      modalImg: modalItem ? modalItem.img : '',
+      modalTitle: modalItem ? (modalItem.title || '') : '',
+      modalVideo: (modalItem && modalItem.video) ? modalItem.video : '',
+      modalIsImage: !!(modalItem && !modalItem.video),
+      openReel: this.openReel,
+      closeModal: this.closeModal,
+      stopProp: this.stopProp,
+      toggleLang: this.toggleLang,
+      setRoot: this.setRoot,
+      setLight: this.setLight,
+      setGrain: this.setGrain,
+      setBgFlow: this.setBgFlow,
+      setBgFlow2: this.setBgFlow2,
+    };
+  }
+}
+</script>
+</body>
+</html>
